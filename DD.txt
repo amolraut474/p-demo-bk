@@ -1,0 +1,60 @@
+(1)
+P:IT security services
+R:Web De
+E:HTML, CSS,Bootstrap and Javascript.
+D:This is the site for IT security, which provides services like IT security awareness and cyber security. For this website, please refer.
+U:https://reflare.com/
+R:Designing unit testing, deployment, and maintenance.
+
+
+
+
+(2)
+P:Manufacturing business.
+R:Web De
+E:Wordpress
+D:This is the site for manufacturing business informatics, which provides services like business transformation services. For this website, please refer.
+U:https://alphanovaconsulting.com/
+R:Designing unit testing, deployment, and maintenance.
+
+
+
+(3)
+P:Home building, home renovation, or home maintenance service.
+R:Web De
+E:Wordpress
+D:This is the site for home building and home renovation, which provides services like home building, home renovation, or home maintenance. For this website, please refer.
+U:https://erasproremodeling.com/
+R:Designing unit testing, deployment, and maintenance.
+
+
+
+
+(4)
+P:Cleaning services.
+R:Web De
+E:Wordpress
+D:This is the site for cleaning services, which provides services like house cleaning, apartment cleaning, or office cleaning. For this website, please refer.
+U:https://erasprocleaningservices.com/
+R:Designing unit testing, deployment, and maintenance.
+
+
+Also refer to those demo websites created using HTML, CSS, and Javascript.
+U:https://amolraut474.github.io/JavaScript-ecommerce-site/
+U:https://amolraut474.github.io/Portfolio-Designing/
+U:https://amolraut474.github.io/Sample-live-website/
+U:https://amolraut474.github.io/myProject/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
