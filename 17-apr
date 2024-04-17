@@ -1,1 +1,108 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Form Designer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="formBuilder"></div>
+    <button onclick="addElement('input')">Add Input</button>
+    <button onclick="addElement('textarea')">Add Textarea</button>
+    <button onclick="addElement('select')">Add Select</button>
+    <button id="saveForm" onclick="saveForm()">Save Form</button>
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+#formBuilder {
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 10px;
+}
+
+input, select, textarea {
+    width: calc(100% - 20px);
+    padding: 5px;
+    margin-top: 5px;
+}
+
+button {
+    margin-right: 5px;
+}
+
+
+const formData = [
+    { id: "c0ac49c5-871e-4c72-a878-251de465e6b4", type: "input", label: "Sample Label", placeholder: "Sample placeholder" },
+    { id: "146e69c2-1630-4a27-9d0b-f09e463a66e4", type: "select", label: "Sample Label", options: ["Option 1", "Option 2", "Option 3"] },
+    { id: "45002ecf-85cf-4852-bc46-529f94a758f5", type: "input", label: "Another Label", placeholder: "Another Placeholder" },
+    { id: "680cff8d-c7f9-40be-8767-e3d6ba420952", type: "textarea", label: "Text Area", placeholder: "Type here..." }
+];
+
+function initForm() {
+    const formBuilder = document.getElementById('formBuilder');
+    formBuilder.innerHTML = ''; // Clear existing form UI
+    formData.forEach((element, index) => {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'field';
+        fieldDiv.id = element.id;
+        fieldDiv.innerHTML = `<label>${element.label}</label>`;
+
+        let inputElement;
+        if (element.type === 'input' || element.type === 'textarea') {
+            inputElement = document.createElement(element.type);
+            inputElement.placeholder = element.placeholder;
+        } else if (element.type === 'select') {
+            inputElement = document.createElement('select');
+            element.options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.text = option;
+                inputElement.appendChild(optionElement);
+            });
+        }
+
+        fieldDiv.appendChild(inputElement);
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = function () { deleteElement(element.id); };
+        fieldDiv.appendChild(deleteButton);
+
+        formBuilder.appendChild(fieldDiv);
+    });
+}
+
+function addElement(type) {
+    const newId = Math.random().toString(36).substring(2, 15); // Generate a pseudo-random ID
+    const newElement = {
+        id: newId,
+        type: type,
+        label: "New " + type.charAt(0).toUpperCase() + type.slice(1),
+        placeholder: "Enter " + type,
+        options: ['Option 1', 'Option 2']
+    };
+    formData.push(newElement);
+    initForm(); // Re-render the form
+}
+
+function deleteElement(id) {
+    const index = formData.findIndex(element => element.id === id);
+    if (index > -1) {
+        formData.splice(index, 1);
+        initForm(); // Re-render the form
+    }
+}
+
+function saveForm() {
+    console.log(JSON.stringify(formData));
+}
+
+initForm();
+
