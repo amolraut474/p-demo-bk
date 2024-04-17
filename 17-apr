@@ -154,3 +154,88 @@ function drop(event) {
 }
 
 initForm();
+
+
+
+
+let formData = [
+    // Initial sample data provided by you in JSON
+    { id: "c0ac49c5-871e-4c72-a878-251de465e6b4", type: "input", label: "Sample Label", placeholder: "Sample placeholder" },
+    { id: "146e69c2-1630-4a27-9d0b-f09e463a66e4", type: "select", label: "Sample Label", options: ["Sample Option", "Sample Option", "Sample Option"] },
+    { id: "45002ecf-85cf-4852-bc46-529f94a758f5", type: "input", label: "Sample Label", placeholder: "Sample Placeholder" },
+    { id: "680cff8d-c7f9-40be-8767-e3d6ba420952", type: "textarea", label: "Sample Label", placeholder: "Sample Placeholder" }
+];
+
+function initForm() {
+    const formBuilder = document.getElementById('formBuilder');
+    formBuilder.innerHTML = '';
+    formData.forEach(element => {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'field';
+        fieldDiv.id = element.id;
+        fieldDiv.draggable = true;
+        fieldDiv.ondragstart = drag;
+        fieldDiv.innerHTML = `
+            <label>${element.label}</label>
+            ${element.type === 'select' ? renderSelect(element) : renderInput(element)}
+            <button onclick="deleteElement('${element.id}')">Delete</button>
+        `;
+        formBuilder.appendChild(fieldDiv);
+    });
+}
+
+function renderInput(element) {
+    return `<input type="${element.type}" placeholder="${element.placeholder}" value="">`;
+}
+
+function renderSelect(element) {
+    let optionsHTML = element.options.map(option => `<option>${option}</option>`).join('');
+    return `<select>${optionsHTML}</select>`;
+}
+
+function addElement(type) {
+    const newId = Math.random().toString(36).substring(2, 15); // Generate a pseudo-random ID
+    // Set defaults based on sample JSON
+    let newElement = {
+        id: newId,
+        type: type,
+        label: "Sample Label", // Default label from sample JSON
+        placeholder: "Sample Placeholder", // Default placeholder from sample JSON
+        options: ["Sample Option", "Sample Option", "Sample Option"] // Default options for select
+    };
+    if (type !== 'select') {
+        delete newElement.options; // Remove options key for input and textarea
+    }
+    formData.push(newElement);
+    initForm();
+}
+
+function deleteElement(id) {
+    formData = formData.filter(element => element.id !== id);
+    initForm();
+}
+
+function saveForm() {
+    console.log(JSON.stringify(formData));
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var dropped = document.getElementById(data);
+    var target = event.target.closest('.field');
+
+    if (target && dropped !== target) {
+        target.before(dropped); // Simpler logic for reordering
+    }
+}
+
+initForm();
