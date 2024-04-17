@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="formBuilder"></div>
+    <div id="formBuilder" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     <button onclick="addElement('input')">Add Input</button>
     <button onclick="addElement('textarea')">Add Textarea</button>
     <button onclick="addElement('select')">Add Select</button>
@@ -16,6 +15,7 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -27,10 +27,14 @@ body {
 
 .field {
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    cursor: move; /* Indicates that you can drag the field */
 }
 
 input, select, textarea {
-    width: calc(100% - 20px);
+    width: 100%;
     padding: 5px;
     margin-top: 5px;
 }
@@ -49,34 +53,29 @@ const formData = [
 
 function initForm() {
     const formBuilder = document.getElementById('formBuilder');
-    formBuilder.innerHTML = ''; // Clear existing form UI
+    formBuilder.innerHTML = '';
     formData.forEach((element, index) => {
         const fieldDiv = document.createElement('div');
         fieldDiv.className = 'field';
         fieldDiv.id = element.id;
-        fieldDiv.innerHTML = `<label>${element.label}</label>`;
-
-        let inputElement;
-        if (element.type === 'input' || element.type === 'textarea') {
-            inputElement = document.createElement(element.type);
-            inputElement.placeholder = element.placeholder;
-        } else if (element.type === 'select') {
-            inputElement = document.createElement('select');
-            element.options.forEach(option => {
-                const optionElement = document.createElement('option');
-                optionElement.text = option;
-                inputElement.appendChild(optionElement);
-            });
-        }
-
-        fieldDiv.appendChild(inputElement);
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function () { deleteElement(element.id); };
-        fieldDiv.appendChild(deleteButton);
-
+        fieldDiv.draggable = true;
+        fieldDiv.ondragstart = drag;
+        fieldDiv.innerHTML = `
+            <label contenteditable="true" onblur="updateLabel('${element.id}', this.innerText)">${element.label}</label>
+            ${element.type === 'select' ? renderSelect(element) : renderInput(element)}
+            <button onclick="deleteElement('${element.id}')">Delete</button>
+        `;
         formBuilder.appendChild(fieldDiv);
     });
+}
+
+function renderInput(element) {
+    return `<input type="${element.type}" placeholder="${element.placeholder}" onblur="updatePlaceholder('${element.id}', this.value)" value="${element.placeholder}">`;
+}
+
+function renderSelect(element) {
+    let optionsHTML = element.options.map(option => `<option>${option}</option>`).join('');
+    return `<select ondblclick="editOptions('${element.id}')">${optionsHTML}</select>`;
 }
 
 function addElement(type) {
@@ -89,14 +88,14 @@ function addElement(type) {
         options: ['Option 1', 'Option 2']
     };
     formData.push(newElement);
-    initForm(); // Re-render the form
+    initForm();
 }
 
 function deleteElement(id) {
     const index = formData.findIndex(element => element.id === id);
     if (index > -1) {
         formData.splice(index, 1);
-        initForm(); // Re-render the form
+        initForm();
     }
 }
 
@@ -104,5 +103,54 @@ function saveForm() {
     console.log(JSON.stringify(formData));
 }
 
-initForm();
+function updateLabel(id, newText) {
+    const element = formData.find(el => el.id === id);
+    if (element) {
+        element.label = newText;
+    }
+}
 
+function updatePlaceholder(id, newPlaceholder) {
+    const element = formData.find(el => el.id === id);
+    if (element) {
+        element.placeholder = newPlaceholder;
+    }
+}
+
+function editOptions(id) {
+    const element = formData.find(el => el.id === id);
+    if (element && element.type === 'select') {
+        const newOptions = prompt("Enter options separated by commas", element.options.join(','));
+        if (newOptions !== null) {
+            element.options = newOptions.split(',');
+            initForm();
+        }
+    }
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var dropped = document.getElementById(data);
+    var target = event.target.closest('.field');
+
+    if (target && dropped !== target) {
+        var fromIndex = Array.from(dropped.parentNode.children).indexOf(dropped);
+        var toIndex = Array.from(target.parentNode.children).indexOf(target);
+        if (fromIndex < toIndex) {
+            target.parentNode.insertBefore(dropped, target.nextSibling);
+        } else {
+            target.parentNode.insertBefore(dropped, target);
+        }
+    }
+}
+
+initForm();
