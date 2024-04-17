@@ -239,3 +239,126 @@ function drop(event) {
 }
 
 initForm();
+
+
+
+
+
+
+let formData = [
+    // Initial sample data provided by you in JSON
+    { id: "c0ac49c5-871e-4c72-a878-251de465e6b4", type: "input", label: "Sample Label", placeholder: "Sample placeholder" },
+    { id: "146e69c2-1630-4a27-9d0b-f09e463a66e4", type: "select", label: "Sample Label", options: ["Sample Option", "Sample Option", "Sample Option"] },
+    { id: "45002ecf-85cf-4852-bc46-529f94a758f5", type: "input", label: "Sample Label", placeholder: "Sample Placeholder" },
+    { id: "680cff8d-c7f9-40be-8767-e3d6ba420952", type: "textarea", label: "Sample Label", placeholder: "Sample Placeholder" }
+];
+
+function initForm() {
+    const formBuilder = document.getElementById('formBuilder');
+    formBuilder.innerHTML = '';
+    formData.forEach(element => {
+        const fieldDiv = createField(element);
+        formBuilder.appendChild(fieldDiv);
+    });
+}
+
+function createField(element) {
+    const fieldDiv = document.createElement('div');
+    fieldDiv.className = 'field';
+    fieldDiv.id = element.id;
+    fieldDiv.draggable = true;
+    fieldDiv.ondragstart = drag;
+    
+    const labelInput = createEditableInput('Label', element.label, (value) => element.label = value);
+    fieldDiv.appendChild(labelInput);
+
+    if (element.type === 'select') {
+        const selectOptionsInput = createEditableTextarea('Options', element.options.join('\n'), (value) => element.options = value.split('\n'));
+        fieldDiv.appendChild(selectOptionsInput);
+    } else {
+        const placeholderInput = createEditableInput('Placeholder', element.placeholder, (value) => element.placeholder = value);
+        fieldDiv.appendChild(placeholderInput);
+    }
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function () { deleteElement(element.id); };
+    fieldDiv.appendChild(deleteButton);
+
+    return fieldDiv;
+}
+
+function createEditableInput(label, value, onChange) {
+    const labelElement = document.createElement('label');
+    labelElement.textContent = `${label}: `;
+    
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.value = value;
+    inputElement.addEventListener('input', (event) => onChange(event.target.value));
+
+    const container = document.createElement('div');
+    container.appendChild(labelElement);
+    container.appendChild(inputElement);
+
+    return container;
+}
+
+function createEditableTextarea(label, value, onChange) {
+    const labelElement = document.createElement('label');
+    labelElement.textContent = `${label}: `;
+
+    const textareaElement = document.createElement('textarea');
+    textareaElement.value = value;
+    textareaElement.rows = 3;
+    textareaElement.addEventListener('input', (event) => onChange(event.target.value));
+
+    const container = document.createElement('div');
+    container.appendChild(labelElement);
+    container.appendChild(textareaElement);
+
+    return container;
+}
+
+function addElement(type) {
+    const newId = generateId();
+    const newLabel = 'New ' + type.charAt(0).toUpperCase() + type.slice(1);
+    const newPlaceholder = 'Enter ' + type;
+    const newElement = {
+        id: newId,
+        type: type,
+        label: newLabel,
+        placeholder: newPlaceholder,
+        options: type === 'select' ? ['Option 1', 'Option 2', 'Option 3'] : undefined
+    };
+    formData.push(newElement);
+    const newField = createField(newElement);
+    document.getElementById('formBuilder').appendChild(newField);
+}
+
+function deleteElement(id) {
+    formData = formData.filter(element => element.id !== id);
+    const formBuilder = document.getElementById('formBuilder');
+    const fieldToRemove = formBuilder.querySelector(`#${id}`);
+    if (fieldToRemove) {
+        formBuilder.removeChild(fieldToRemove);
+    }
+}
+
+function saveForm() {
+    console.log(JSON.stringify(formData));
+}
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function generateId() {
+    return Math.random().toString(36).substr(2, 10);
+}
+
+initForm();
