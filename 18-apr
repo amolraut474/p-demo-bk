@@ -76,9 +76,9 @@
 
         .field {
             margin-bottom: 10px;
-          
+
             padding: 10px;
-           
+
             cursor: move;
             /* Indicates that you can drag the field */
         }
@@ -89,6 +89,10 @@
             width: calc(100% - 100px);
             padding: 5px;
             margin-top: 5px;
+            padding: 15px 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #6b6868;
         }
 
         button {
@@ -124,6 +128,12 @@
             font-weight: 700;
             margin: 0;
             font-size: 18px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #212121;
         }
     </style>
 </head>
