@@ -1,1 +1,17 @@
 
+I need help for this Problem Statement
+You have to build a visual form designer that would use the sample JSON data provided below to render a
+form and let the user add, reorder, or delete elements on that form.
+Technologies to use
+● HTML
+● CSS
+● Vanilla Javascript/Jquery
+Features required
+● Ability to add new inputs, selects, or textareas to the form. (Users can add any number of each
+element)
+● Ability to reorder the form elements, it should be implemented using drag-and-drop
+● Ability to delete elements
+● Ability to save (just log the updated JSON in the devtools console by clicking save)
+● Ability to edit labels and placeholders for inputs and textareas
+● Ability to add and delete options in selects
+NOTE: The label, placeholders, and options don't have to be editable. You can use the provided values in
