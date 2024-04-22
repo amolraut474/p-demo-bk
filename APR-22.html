@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Form Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            background: #f2f4f8;
+        }
+
+        .navbar {
+            background-color: #212121;
+            color: #666;
+            box-shadow: 0px 1px 15px 1px rgba(113, 106, 202, 0.1);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        #sidebar {
+            width: 300px;
+            background-color: #212121;
+            box-sizing: border-box;
+            height: 100vh;
+            overflow-y: auto;
+            color: #fff;
+        }
+
+        #content {
+            flex-grow: 1;
+            padding: 40px;
+            box-sizing: border-box;
+            background: #f2f4f8;
+        }
+
+        .container {
+            display: flex;
+            background: #212121;
+        }
+
+        .filter-heading {
+            border-top: 1px solid rgba(255, 255, 255, .1) !important;
+            background: #2f89fc;
+            padding: 15px;
+            color: #fff;
+            font-weight: 700;
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, .1) !important;
+            background: #212121;
+            padding: 15px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .filter-btn::after {
+            content: '+';
+            margin-left: 5px;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .filter-btn:hover {
+            background-color: #444;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            position: relative;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            object-fit: cover;
+            /* Ensure the image covers the entire container */
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+
+        }
+
+        #searchInput {
+            padding: 15px 60px;
+            background: #2f89fc;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+
+        }
+
+        #searchInput::placeholder {
+            color: white;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: none;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-btn {
+            background-color: #fff;
+        }
+
+        .search-btn:hover {
+            background-color: #2f89fc;
+        }
+
+        .search-btn i {
+            color: #212121;
+            font-size: 18px;
+        }
+
+        .search-btn i:hover {
+            color: #fff;
+        }
+
+        .serach-box {
+            position: relative;
+        }
+
+        @media only screen and (max-width: 600px) {
+            #sidebar {
+                width: 100%;
+
+            }
+
+            #content {
+                padding: 0px;
+            }
+
+            .search-container {
+                flex-grow: 1;
+            }
+
+            #searchInput {
+                padding-right: 45px;
+            }
+
+            .card-container {
+                grid-template-columns: auto;
+
+            }
+
+            .card {
+                width: 250px;
+            }
+
+            .container {
+                display: grid;
+                grid-template-columns: 50% 50%;
+            }
+        }
+            @media only screen and (max-width: 1440px) {
+
+                .card {
+                    width: 320px;
+                }
+
+                .card-container {
+                    justify-content: center;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div>
+            <h2 class="logo">LOGO</h2>
+        </div>
+        <div class="serach-box">
+            <input type="text" id="searchInput" placeholder="Search projects..." oninput="searchProjects(this.value)">
+            <button type="submit" class="search-btn"
+                onclick="searchProjects(document.getElementById('searchInput').value)">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+    </div>
+    <div class="container">
+        <div id="sidebar">
+            <h2 class="filter-heading">Filter</h2>
+            <a href="#" class="filter-btn" onclick="filterProjects('all')">All</a>
+            <a href="#" class="filter-btn" onclick="filterProjects('HTML')">HTML</a>
+            <a href="#" class="filter-btn" onclick="filterProjects('CSS')">CSS</a>
+            <a href="#" class="filter-btn" onclick="filterProjects('JavaScript')">JavaScript</a>
+            <a href="#" class="filter-btn" onclick="filterProjects('React')">React</a>
+        </div>
+        <div id="content">
+            <div id="projects" class="card-container"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderProjects(getAllProjects());
+        });
+
+        function getAllProjects() {
+            return [
+                { "title": "Web Project 1", "description": "Description for Web Project 1", "url": "https://example.com/project1", "technology": "HTML", "image": "https://via.placeholder.com/150" },
+                { "title": "Mobile Project 1", "description": "Description for Mobile Project 1", "url": "https://example.com/project2", "technology": "JavaScript", "image": "https://via.placeholder.com/150" },
+                { "title": "Web Project 2", "description": "Description for Web Project 2", "url": "https://example.com/project3", "technology": "React", "image": "https://via.placeholder.com/150" },
+                { "title": "Mobile Project 2", "description": "Description for Mobile Project 2", "url": "https://example.com/project4", "technology": "CSS", "image": "https://via.placeholder.com/150" },
+                { "title": "Web Project 3", "description": "Description for Web Project 3", "url": "https://example.com/project5", "technology": "Vue.js, MongoDB", "image": "https://via.placeholder.com/150" },
+                { "title": "Mobile Project 3", "description": "Description for Mobile Project 3", "url": "https://example.com/project6", "technology": "React HTML", "image": "https://via.placeholder.com/150" }
+            ];
+        }
+
+        function renderProjects(projects) {
+            const projectsContainer = document.getElementById("projects");
+            projectsContainer.innerHTML = '';
+            projects.forEach(project => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `
+                <img src="${project.image}" alt="${project.title}">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <a href="${project.url}" target="_blank">Project URL</a>
+                    <p class="technologies">Technologies: ${project.technology}</p>
+                `;
+                projectsContainer.appendChild(card);
+            });
+        }
+
+        function filterProjects(filter) {
+            const projects = getAllProjects();
+            const filteredProjects = filter === "all" ? projects : projects.filter(project => project.technology.includes(filter));
+            renderProjects(filteredProjects);
+        }
+
+        function searchProjects(query) {
+            const projects = getAllProjects();
+            const filteredProjects = projects.filter(project =>
+                project.title.toLowerCase().includes(query.toLowerCase())
+            );
+            renderProjects(filteredProjects);
+        }
+    </script>
+</body>
+
+</html>
