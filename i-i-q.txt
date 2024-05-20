@@ -1,0 +1,81 @@
+WordPress
+
+Q 1. According to you, What do you think are the hooks? Can you define different types of hooks in WordPress?
+->As the Hooks enable users to create the WordPress themes or the plug-ins with short code without changing the original files.
+
+These are the two types of hooks:
+
+Action hooks: Action hooks refers to facilitating you to insert an additional code from an outside resource.
+Filter hooks: Filter hooks refers to facilitating you to add content or text at the end of the post.
+
+
+Q 2. What is a child theme in WordPress?
+
+->A child theme is a theme that inherits the functionality and styling of another theme called the parent theme.
+  It allows you to make modifications to a theme without altering the original theme files
+
+Q 3.Explain the WordPress loop.
+
+->The WordPress loop is a PHP code structure used to display posts or pages on a WordPress website. 
+ It retrieves content from the database based on the current context and displays it on the webpage.
+
+
+Q 4.What are WordPress themes and plugins?
+
+->Themes control the design and layout of a WordPress website, while plugins add specific functionalities to enhance its features.
+
+
+Q 5. Which is considered more secure wordpress.com or wordpress.org?
+->Therefore it is the wordpress.com, it is relatively more secure than wordpress.org and because they limit the themes and there they
+ do not allow plugin's installation. However, the security of your website is dependent on the 
+hosting business and the actions they take to prevent security issues.
+
+
+
+Q 6.What are Categories in WordPress?
+
+->Categories in WordPress are a way to organize and group posts based on topics or subjects.
+
+
+Q 7.WordPress: free and paid themes?
+ ->  free:-
+    (1)Twenty Twenty-One
+    (2)Twenty Twenty-Two
+    (3)Twenty Twenty-Four
+    (4)Twenty Twenty-Three
+    (5)Astra
+
+   paid:-
+   (1)Divi
+   (2)Avada
+   (3)Enfold
+  
+
+ Q 8.Explain the purpose of a child theme.
+ ->A child theme is used to customize and override the styles and templates of a parent theme without modifying the parent theme directly.
+   It's beneficial for maintaining modifications even after parent theme updates. 
+  Changes made to the child theme won't be lost during updates, providing a safer way to customize your site's appearance and functionality.
+
+
+
+ Q 9.What is the purpose of the functions.php file in a WordPress theme?
+ ->The functions.php file is critical in a WordPress theme's directory. It allows you to add custom code,
+   functions, and hooks to modify or extend the theme's functionality. It's often used to enqueue stylesheets,
+   register custom post  types, and add theme-specific features.
+
+  Q 10.Tell me the some  some bilder names in WordPress you have used.
+ ->(1)Elementor
+   (2)Beaver Builder
+   (3)Divi Builder
+   (4)Visual Composer
+   (5)WPBakery Page Builder
+
+
+
+
+
+
+
+
+
+
