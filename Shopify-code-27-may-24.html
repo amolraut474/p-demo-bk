@@ -1,1 +1,92 @@
+<section>
+  <div class="container page-width">
+    <div class="row">
+      <div class="row main-coll">
+        {% assign block_count = section.blocks.size %}
+        {% assign col_size = 12 | divided_by: block_count %}
+        {% for block in section.blocks %}
+        <div class="col-{{ col_size }} circle-container" style="border-color: {{ block.settings.border_color }};">
+          {% render 'card-collection', card_collection: block.settings.collection %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "mycollection",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Amol-collection"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.main-coll {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Space between the circles */
+  gap: 10px; /* Add gap between circles */
+}
+
+.circle-container {
+  width: 100%; /* Ensure the container takes full width */
+  position: relative;
+  border: 4px solid;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+}
+
+.circle-container > * {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media (max-width: 767px) {
+  .main-coll {
+    flex-wrap: nowrap; /* Prevent items from wrapping */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+    display: flex; /* Ensure flex display for proper layout */
+    gap: 10px; /* Add gap between collections */
+  }
+
+  .circle-container {
+    flex: 0 0 calc(50% - 5px); /* Ensure two collections per row with gap */
+    max-width: calc(50% - 5px);
+  }
+}
+
+
+
+{% endstylesheet %}
+
+{% javascript %}
+
+{% endjavascript %}
 
