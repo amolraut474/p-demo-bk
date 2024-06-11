@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond Border Animation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .diamond-border {
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+            transform: rotate(45deg);
+            position: relative;
+        }
+
+        .moving-circle {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .move {
+            animation: moveCircle 5s linear forwards;
+        }
+
+        @keyframes moveCircle {
+            0% {
+                top: 0;
+                left: 50%;
+            }
+            25% {
+                top: 50%;
+                left: 100%;
+            }
+            50% {
+                top: 100%;
+                left: 50%;
+            }
+            75% {
+                top: 50%;
+                left: 0;
+            }
+            100% {
+                top: 0;
+                left: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="diamond-border">
+        <div class="moving-circle"></div>
+    </div>
+    <button onclick="startAnimation()">Start Animation</button>
+
+    <script>
+        function startAnimation() {
+            const circle = document.querySelector('.moving-circle');
+            circle.classList.remove('move'); // Reset animation
+            void circle.offsetWidth; // Trigger reflow to restart animation
+            circle.classList.add('move'); // Start animation
+        }
+    </script>
+</body>
+</html>
 
