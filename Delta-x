@@ -1,1 +1,129 @@
 
+<section>
+  <div class="container page-width">
+    <div class="row">
+      <div class="row main-coll">
+        {% assign block_count = section.blocks.size %}
+        {% assign col_size = 12 | divided_by: block_count %}
+        {% for block in section.blocks %}
+          <div class="col-{{ col_size }}">
+            <div class="circle-container" style="border-color: {{ block.settings.border_color }};">
+              <a href="{{ block.settings.collection.url }}" class="collection-link">
+                <img
+                  src="{{ block.settings.collection.image | img_url: 'medium' }}"
+                  alt="{{ block.settings.collection.title }}"
+                  class="collection-image"
+                >
+              </a>
+            </div>
+            <div class="title-container">
+              <a href="{{ block.settings.collection.url }}" class="collection-link">
+                <p class="collection-title">{{ block.settings.collection.title }}</p>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "collection-menu",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "collection-menu"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+          .main-coll {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+          }
+
+          .circle-container {
+            width: 150px;
+            height: 150px;
+            border: 4px solid;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+          }
+
+          .collection-image {
+            width: 100%;
+            height: auto;
+            border-radius: 40%;
+          }
+
+          .title-container {
+            position: relative;
+            text-align: center;
+            margin-top: 10px;
+          }
+
+          .collection-title {
+            font-size: 14px;
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+          }
+        section {
+            padding: 9px 0px;
+        }
+
+  .collection-title {
+      color: #000;
+  }
+       @media (max-width: 768px) {
+        .main-coll {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          display: flex;
+          gap: 10px;
+        }
+
+        .col-{{ col_size }} {
+          flex: 0 0 calc(33.33% - 10px);
+          max-width: calc(33.33% - 10px);
+        }
+      }
+{% endstylesheet %}
+<script>
+  $(document).ready(function() {
+    $('.collection-link').on('click', function(event) {
+      event.preventDefault();
+      var collectionUrl = $(this).attr('href');
+      window.location.href = collectionUrl;
+    });
+  });
+</script>
