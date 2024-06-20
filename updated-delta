@@ -1,1 +1,186 @@
 
+<section class="custom-collection-popup">
+  <div class="container page-width">
+    <div class="row collection-menu">
+      {% for block in section.blocks %}
+        <div
+          class="circle-container"
+          style="border-color: {{ block.settings.border_color }};"
+          data-collection-title="{{ block.settings.collection.title }}"
+          data-collection-image="{{ block.settings.collection.image | img_url: 'medium' }}"
+        >
+          <div class="circle-content">
+            <img
+              src="{{ block.settings.collection.image | img_url: 'small' }}"
+              alt="{{ block.settings.collection.title }}"
+            >
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div class="modal">
+  <div class="modal-content">
+    <!-- Content dynamically populated by JavaScript -->
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "collection-menu",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "color",
+          "id": "border_color",
+          "label": "Border Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "collection-menu"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+          .main-coll {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+          }
+
+          .circle-container {
+            width: 150px;
+            height: 150px;
+            border: 4px solid;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+          }
+
+          .collection-image {
+            width: 100%;
+            height: auto;
+            border-radius: 40%;
+          }
+
+          .title-container {
+            position: relative;
+            text-align: center;
+            margin-top: 10px;
+          }
+
+          .collection-title {
+            font-size: 14px;
+            position: absolute;
+            bottom: -32px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+          }
+        section {
+            padding: 9px 0px;
+        }
+
+  .collection-title {
+      color: #000;
+  }
+       @media (max-width: 768px) {
+        .main-coll {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          display: flex;
+          gap: 10px;
+        }
+
+        .col-{{ col_size }} {
+          flex: 0 0 calc(33.33% - 10px);
+          max-width: calc(33.33% - 10px);
+        }
+      }
+
+/* Styles for popup/modal */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .modal.active {
+    display: block;
+  }
+
+  .modal-content {
+    position: relative;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+{% endstylesheet %}
+{% javascript %}
+document.addEventListener('DOMContentLoaded', function() {
+  var circleContainers = document.querySelectorAll('.circle-container');
+  var modal = document.querySelector('.modal');
+  var modalContent = modal.querySelector('.modal-content');
+
+  circleContainers.forEach(function(container) {
+    container.addEventListener('click', function() {
+      var collectionTitle = this.getAttribute('data-collection-title');
+      var collectionImage = this.getAttribute('data-collection-image');
+      showModal(collectionTitle, collectionImage);
+    });
+  });
+
+  modal.addEventListener('click', function(event) {
+    if (event.target === modal || event.target.classList.contains('close-modal')) {
+      closeModal();
+    }
+  });
+
+  function showModal(collectionTitle, collectionImage) {
+    modalContent.innerHTML = `
+      <span class="close-modal">&times;</span>
+      <img src="${collectionImage}" alt="${collectionTitle}" style="max-width: 100%;">
+      <h2>${collectionTitle}</h2>
+    `;
+    modal.classList.add('active');
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modalContent.innerHTML = ''; // Clear modal content when closed
+  }
+});
+{% endjavascript %}
+
