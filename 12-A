@@ -1,42 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Web Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">MyLogo</div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <div class="hamburger">&#9776;</div>
+        </nav>
+    </header>
 
-Objective:
-Create a responsive web page layout using HTML and CSS. The page should adjust smoothly across various screen sizes (desktop, tablet, mobile) without using any frameworks like Bootstrap.
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Welcome to Our Website</h1>
+            <p>Your success is our priority</p>
+        </div>
+    </section>
 
-Requirements:
-Header:
+    <!-- Three-Column Section -->
+    <section class="services">
+        <div class="service">
+            <div class="icon">🛠️</div>
+            <h2>Service 1</h2>
+            <p>Description of service 1.</p>
+        </div>
+        <div class="service">
+            <div class="icon">🚀</div>
+            <h2>Service 2</h2>
+            <p>Description of service 2.</p>
+        </div>
+        <div class="service">
+            <div class="icon">💼</div>
+            <h2>Service 3</h2>
+            <p>Description of service 3.</p>
+        </div>
+    </section>
 
-It should include a logo on the left and a navigation menu on the right.
+    <!-- Footer Section -->
+    <footer>
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p>Address, Phone, Email</p>
+        </div>
+        <div class="social-media">
+            <h3>Follow Us</h3>
+            <p>Social Media Links</p>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+/* General Styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-The navigation menu should contain links to "Home," "About," "Services," and "Contact Us."
+header, footer, section {
+    padding: 20px;
+}
 
-On smaller screens, the navigation should collapse into a hamburger menu.
+ul {
+    list-style: none;
+}
 
-Hero Section:
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+}
 
-Full-width hero image with a centered heading and subheading text overlay.
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
 
-The text should remain centered and readable on all screen sizes.
+.nav-menu {
+    display: flex;
+}
 
-Three-Column Section:
+.nav-menu li {
+    margin-left: 20px;
+}
 
-Below the hero section, create a three-column layout that showcases three different services. Each column should have an icon at the top, a title, and a brief description.
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+}
 
-On mobile devices, these columns should stack vertically.
+.hamburger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
 
-Footer:
+/* Hero Section Styles */
+.hero {
+    background-image: url('hero-image.jpg'); /* Replace with your image */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
 
-The footer should have three sections:
+.hero-text {
+    max-width: 600px;
+    margin: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+}
 
-Contact Information
+/* Services Section Styles */
+.services {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
 
-Social Media Links
+.service {
+    flex-basis: 30%;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
 
-A simple copyright notice.
+.icon {
+    font-size: 50px;
+}
 
-Ensure the footer is styled to fit the overall theme and remains at the bottom of the page.
+/* Footer Styles */
+footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+}
 
-Submission:
-Provide the HTML and CSS files.
+footer div {
+    flex-basis: 30%;
+}
 
-Ensure the code is well-organized and commented.
+footer p {
+    margin-top: 10px;
+}
 
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .services {
+        flex-direction: column;
+    }
+
+    .service {
+        margin-bottom: 20px;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+
+    footer div {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text {
+        padding: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo {
+        margin-bottom: 10px;
+    }
+}
+
+
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+    });
+</script>
