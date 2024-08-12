@@ -1,1 +1,42 @@
 
+Objective:
+Create a responsive web page layout using HTML and CSS. The page should adjust smoothly across various screen sizes (desktop, tablet, mobile) without using any frameworks like Bootstrap.
+
+Requirements:
+Header:
+
+It should include a logo on the left and a navigation menu on the right.
+
+The navigation menu should contain links to "Home," "About," "Services," and "Contact Us."
+
+On smaller screens, the navigation should collapse into a hamburger menu.
+
+Hero Section:
+
+Full-width hero image with a centered heading and subheading text overlay.
+
+The text should remain centered and readable on all screen sizes.
+
+Three-Column Section:
+
+Below the hero section, create a three-column layout that showcases three different services. Each column should have an icon at the top, a title, and a brief description.
+
+On mobile devices, these columns should stack vertically.
+
+Footer:
+
+The footer should have three sections:
+
+Contact Information
+
+Social Media Links
+
+A simple copyright notice.
+
+Ensure the footer is styled to fit the overall theme and remains at the bottom of the page.
+
+Submission:
+Provide the HTML and CSS files.
+
+Ensure the code is well-organized and commented.
+
