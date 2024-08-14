@@ -309,3 +309,100 @@ footer {
         padding: 8px 16px;
     }
 }
+Advanced UI Implementation of Notification Panel with Modal Pop-upObjective:
+Recreate the sidebar and header and notification panel  design as shown in the provided Figma design with interactivity. The focus is on implementing a responsive design using HTML, CSS, JavaScript (or jQuery), and Bootstrap 4 or 5.
+
+Requirements:
+ Header with Notification Icon:
+
+Implement a header that includes a notification bell icon and logo of website.
+
+Next to the icon, display a counter showing the number of unread notifications.
+
+The counter should update dynamically based on the number of unread notifications.
+
+ Notification Panel:
+
+When the notification icon is clicked, a side panel should slide out from the right.
+
+The panel should list all notifications in descending order (most recent at the top).
+
+Each notification should display a title, a brief message, and a timestamp.
+
+Unread notifications should be visually distinct (e.g., with a bold font or different background color).
+
+Modal Pop-up:
+
+When a notification is clicked, open the full notification content in a modal window.
+
+The modal should include a title, full message, and timestamp.
+
+After the notification is read (clicked), it should be marked as read, and the color should change accordingly in the notification panel.
+
+Notification Management:
+
+Implement functionality to mark notifications as read/unread.
+
+The notification counter should decrease when notifications are marked as read.
+
+Sidebar:
+
+Create a collapsible sidebar on the left with four menu items (e.g., Dashboard, Reports, Settings, and Logout).
+
+The sidebar should collapse into a hamburger menu on mobile devices, similar to what is shown in the Loom video.
+
+Use Font Awesome icons for menu items.
+
+The sidebar should also include a logo at the top and a footer with additional information or links.
+
+ Bonus:
+
+Implement a feature where users can delete notifications from the panel.
+
+Store notifications using local storage or mock API to simulate dynamic content loading.
+
+Responsiveness:
+
+Ensure that the sidebar automatically collapses into a hamburger menu on smaller screens (mobile view).
+
+Implement a toggle button to manually collapse and expand the sidebar on larger screens.
+
+Interactivity:
+
+Use JavaScript or jQuery to handle the sidebar toggle functionality.
+
+Add hover effects on the sidebar menu items and header icons.
+
+Code Structure:
+
+All the HTML, CSS, and JavaScript (or jQuery) should be included in a single index.html file.
+
+The CSS should be embedded within the <head> section of the HTML.
+
+The JavaScript or jQuery code should be placed within the <script> tags at the bottom of the file.
+
+Proper comments should be included in the code to explain the structure and functionality.
+
+Bootstrap Integration:
+
+Utilize Bootstrap 4 or 5 for grid structure, responsiveness, and basic styling.
+
+Include the Bootstrap CDN link in the <head> section.
+
+Icons and Fonts:
+
+Use Font Awesome for icons (include the Font Awesome CDN in the <head>).
+
+Ensure the design matches the visual aesthetics from the Figma design as closely as possible.
+
+Submission:
+Provide a single index.html file that includes all necessary HTML, CSS, and JavaScript.
+
+Ensure the code is clean, well-organized, and commented.
+
+Test the file across various devices to ensure the responsive behavior works as intended.
+
+No external resources (such as images) should be used; only text and Font Awesome icons are allowed.
+
+
+
